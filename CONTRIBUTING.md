@@ -8,6 +8,16 @@ But in order to keep this repo clean and sleek there are some guidelines:
 
 This project is following the PSR-0, PSR-1 and PSR-2 standards.
 
+## Branch
+
+All pull request should go into the develope branch. Pull requests into the master branch will get rejected.
+
+## How to do a pull request
+
+First open an issue on GitHub with ```[Proposal]``` in the title with a brief explanation and implementation ideas.
+I' ll aprove or decline the idea. If it' s get approved you may go ahead and submit a pull request. If you don' t follow this process your pull request will get dropped.
+
+
 ## Aditional coding conventions
 
 The ```namespace``` declaration should go into the same line as the php opening tag:
@@ -31,6 +41,12 @@ There should be a blank line after the last statement within the control structu
     
     }
 
+### Classes
+
+An abstract class should be prefixed with ```Abstract``` (e.g. ```AbstractFoo```).
+
+An interface should be suffixed with ```Interface``` (e.g ```FooInterface```).
+
 ## CI
 
 This repos is tested with the CI server Travis-ci. A build can be skiped with the keyword ```[ci skip]```.
@@ -41,6 +57,6 @@ If logic code is changed a build is necessary.
 
 ## Conclusion
 
-If a pull request doesn' t full-fill these requirements I' ll kindly note it and give 168h (7 days) to fix it, if the violations has been fixed I' ll consire merging it.
+If a pull request doesn' t full-fill these requirements I' ll kindly note it and give 168h (7 days) to fix it, if the violations has been fixed I' ll consider merging it.
 
 Otherwise I' ll close it silently.
