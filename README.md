@@ -37,7 +37,7 @@ And thats it. In the next chapter we we' ll cover basic usage.
 
 This will call the closure callback and therefor returns a new instance of a ```stdClass```.
 
-### Singeltons
+### Singletons
 
 Even if this pattern is often consired to be an anti-pattern, I implemented it, just in case somebody craves for it...
 
@@ -85,10 +85,12 @@ The container doesn' t know what to do with this ```LoggerInterface```. Since th
 
     $container->bind('LoggerInterface', 'BasicLogger');
 
+As you can see you can also bind an id to just a class name.
+
 If a class requires an implementation of the ```LoggerInterface``` the container knows which implementation to use!
 
 
-The ```Container::enableInjecterDetection()``` takes as optional argument a blacklist.
+The ```Container::enableInjecterDetection()``` takes as optional argument a blacklist (and the ```PHP_VERSION``` string, but you can ignore this!)
 
 The exact display of the method is:
 
