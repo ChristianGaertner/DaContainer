@@ -140,6 +140,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 
     /**
      * This test is skipped if we' re not an 5.4 or higher
+     * @requires PHP 5.4
      */
     public function testDisableDependenyInjectionMethodDetection()
     {
@@ -288,6 +289,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 
     /**
      * This test is skipped if we' re not an 5.4 or higher
+     * @requires PHP 5.4
      */
     public function testBuildDimdBlacklist()
     {
