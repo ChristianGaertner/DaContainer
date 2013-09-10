@@ -65,7 +65,7 @@ class Container implements ArrayAccess
 
                 $method = ($id == $concrete) ? 'build' : 'resolve';
 
-                return $container->$method($concrete, array(), false);
+                return $container->$method($concrete, array());
             };
         }
 
@@ -108,7 +108,7 @@ class Container implements ArrayAccess
      * Resolve a binding
      * @param  string $id         The id (used while binding)
      * @param  array  $parameters Parameters are getting passed to the factory
-     * @param  boolen $final      Whether this the final resolve of a class
+     * @param  boolen $final      Whether to fire the callbacks
      * @return mixed              The return value of the closure
      */
     public function resolve($id, array $parameters = array(), $final = true)
@@ -143,7 +143,7 @@ class Container implements ArrayAccess
      * Instantiate a concrete
      * @param  string|Closure       $concrete   The concrete
      * @param  array                $parameters Parameters are getting passed to the factory
-     * @param  boolen               $final      Whether this the final resolve of a class
+     * @param  boolen               $final      Whether to fire the callbacks
      * @return mixed                            The new instance
      *
      * @throws \DaGardner\DaContainer\Exceptions\ResolveException
