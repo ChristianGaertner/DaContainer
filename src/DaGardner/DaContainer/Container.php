@@ -127,7 +127,9 @@ class Container implements ArrayAccess
             
             $this->singletons[$id] = $object;
 
-        }        
+        }
+
+        $this->fireCallbacks($object);
 
         return $object;
     }
