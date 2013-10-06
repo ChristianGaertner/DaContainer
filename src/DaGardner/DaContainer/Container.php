@@ -18,7 +18,7 @@ use DaGardner\DaContainer\Exceptions\ParameterResolveException;
 * A simple IoC Container
 * @author Christian Gärtner <christiangaertner.film@googlemail.com>
 */
-class Container implements ArrayAccess
+class Container implements ArrayAccess, ResolverInterface
 {
     /**
      * The bindings

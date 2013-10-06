@@ -15,6 +15,15 @@ use DaGardner\DaContainer\Container;
 */
 class ContainerTest extends PHPUnit_Framework_TestCase
 {
+
+    public function testGeneral()
+    {
+        $interfaces = class_implements(new Container);
+
+        $this->assertTrue(in_array('ArrayAccess', $interfaces), 'DaContainer should support ArrayAccess');
+        $this->assertTrue(in_array('DaGardner\DaContainer\ResolverInterface', $interfaces), 'DaContainer should implement the Resolver interface');
+    }
+
     public function testClosureBinding()
     {
         $con = new Container;
