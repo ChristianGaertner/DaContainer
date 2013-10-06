@@ -156,7 +156,7 @@ class Container implements ArrayAccess, ResolverInterface
 
         } catch (ReflectionException $e) {
 
-            throw new ResolveException('Target <' . $concrete . '> could not be found.');
+            throw new ResolveException('Target <' . $concrete . '> could not be found.', $e->getCode(), $e);
             
         }
         
@@ -365,7 +365,7 @@ class Container implements ArrayAccess, ResolverInterface
 
             } catch (ReflectionException $e) {
 
-                throw new ResolveException('Target <' . $parameter . '> could not be found.');
+                throw new ResolveException('Target <' . $parameter . '> could not be found.', $e->getCode(), $e);
 
             }
 
