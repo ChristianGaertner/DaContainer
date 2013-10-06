@@ -108,10 +108,9 @@ class Container implements ArrayAccess
      * Resolve a binding
      * @param  string $id         The id (used while binding)
      * @param  array  $parameters Parameters are getting passed to the factory
-     * @param  boolen $final      Whether to fire the callbacks
      * @return mixed              The return value of the closure
      */
-    public function resolve($id, array $parameters = array(), $final = true)
+    public function resolve($id, array $parameters = array())
     {
         if (isset($this->singletons[$id])) {
 
@@ -121,18 +120,12 @@ class Container implements ArrayAccess
 
         $concrete = $this->getConcrete($id);
 
-        $object = $this->build($concrete, $parameters, false);
+        $object = $this->build($concrete, $parameters);
 
 
         if ($this->isSingelton($id)) {
             
             $this->singletons[$id] = $object;
-
-        }
-
-        if ($final) {
-
-            $this->fireCallbacks($object);
 
         }        
 
@@ -143,12 +136,11 @@ class Container implements ArrayAccess
      * Instantiate a concrete
      * @param  string|Closure       $concrete   The concrete
      * @param  array                $parameters Parameters are getting passed to the factory
-     * @param  boolen               $final      Whether to fire the callbacks
      * @return mixed                            The new instance
      *
      * @throws \DaGardner\DaContainer\Exceptions\ResolveException
      */
-    public function build($concrete, array $parameters = array(), $final = true)
+    public function build($concrete, array $parameters = array())
     {
         if ($concrete instanceof Closure) {
 
@@ -398,7 +390,7 @@ class Container implements ArrayAccess
      */
     protected function resolveClass($parameter)
     {
-        return $this->resolve($parameter->getClass()->name, array(), false);
+        return $this->resolve($parameter->getClass()->name, array());
     }
 
     /**
