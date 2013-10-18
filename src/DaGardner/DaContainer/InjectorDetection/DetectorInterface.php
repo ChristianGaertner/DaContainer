@@ -15,8 +15,8 @@ interface DetectorInterface
 {
 	/**
 	 * Detect if the given method is injector method
-	 * @param  \ReflectionMethod $name The method to check
+	 * @param  \ReflectionMethod $method The method to check
 	 * @return bool                   Whether the method is injector method.
 	 */
-    public function detect(ReflectionMethod $name);
+    public function detect(ReflectionMethod $method);
 }

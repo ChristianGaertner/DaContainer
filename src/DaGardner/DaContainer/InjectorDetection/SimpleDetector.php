@@ -19,9 +19,9 @@ class SimpleDetector implements DetectorInterface
     /**
      * {@inheritdoc}
      */
-    public function detect(ReflectionMethod $name)
+    public function detect(ReflectionMethod $method)
     {
-        return (strpos($name->name, 'set') === 0);
+        return (strpos($method->name, 'set') === 0);
     }
 
 }
