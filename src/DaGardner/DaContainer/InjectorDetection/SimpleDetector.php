@@ -6,6 +6,7 @@
  */
 
 use InvalidArgumentException;
+use ReflectionMethod;
 
 /**
 * This class handels a simple the injector-method detection
