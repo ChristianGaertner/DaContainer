@@ -105,10 +105,7 @@ class Container implements ArrayAccess, ResolverInterface
     }
 
     /**
-     * Resolve a binding
-     * @param  string $id         The id (used while binding)
-     * @param  array  $parameters Parameters are getting passed to the factory
-     * @return mixed              The return value of the closure
+     * {@inheritdoc}
      */
     public function resolve($id, array $parameters = array())
     {
