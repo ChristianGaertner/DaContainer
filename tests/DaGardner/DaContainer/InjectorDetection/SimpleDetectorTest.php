@@ -16,28 +16,26 @@ use DaGardner\DaContainer\InjectorDetection\SimpleDetector;
 class SimpleDetectorTest extends PHPUnit_Framework_TestCase
 {
 
+    protected $detector;
+
+    public function setUp() {
+        $this->detector = new SimpleDetector;
+    }
+
     public function testGeneral()
     {
-        $interfaces = class_implements(new SimpleDetector);
+        $interfaces = class_implements($this->detector);
 
         $this->assertTrue(in_array('DaGardner\DaContainer\InjectorDetection\DetectorInterface', $interfaces));
     }
 
     /**
-     * @skip
      * @dataProvider detectionData
      * @covers DaGardner\DaContainer\InjectorDetection\SimpleDetector::detect()
      */
     public function testDetection($result, $name)
     {
-        $this->assertEquals(
-                $result,
-                (new SimpleDetector())
-                
-                ->detect(
-                    $name
-                )
-            );
+        $this->assertEquals($result, $this->detector->detect($name));
     }
 
     public function detectionData()
