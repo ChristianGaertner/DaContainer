@@ -24,8 +24,9 @@ class SimpleDetectorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @skip
      * @dataProvider detectionData
-     * @covers SimpleDetector::detect()
+     * @covers DaGardner\DaContainer\InjectorDetection\SimpleDetector::detect()
      */
     public function testDetection($result, $name)
     {
@@ -63,6 +64,8 @@ class SimpleDetectorTest extends PHPUnit_Framework_TestCase
                 case 'dbset':
                     $result = false;
                     break;
+                default:
+                    $result = false;
             }
 
             $data[] = array($result, $method);
