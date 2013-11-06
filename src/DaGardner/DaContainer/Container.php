@@ -409,7 +409,7 @@ class Container implements ArrayAccess, ResolverInterface
      *
      * @throws \DaGardner\DaContainer\Exceptions\ResolveException
      */
-    protected function resolveClass($parameter)
+    protected function resolveClass(\ReflectionParameter $parameter)
     {
         return $this->resolve($parameter->getClass()->name, array());
     }
@@ -421,7 +421,7 @@ class Container implements ArrayAccess, ResolverInterface
      *
      * @throws \DaGardner\DaContainer\Exceptions\ParameterResolveException
      */
-    protected function resolveArgument($parameter)
+    protected function resolveArgument(\ReflectionParamter $parameter)
     {
         if ($parameter->isDefaultValueAvailable()) {
             

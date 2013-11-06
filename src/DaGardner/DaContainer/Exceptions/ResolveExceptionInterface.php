@@ -5,8 +5,6 @@
  * License: View distributed LICENSE file
  */
 
-use Exception;
-
 /**
 * ParameterResolveException
 * This is getting thrown if a dependency of a constructor

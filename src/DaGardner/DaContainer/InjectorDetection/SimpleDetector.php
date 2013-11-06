@@ -5,7 +5,6 @@
  * License: View distributed LICENSE file
  */
 
-use InvalidArgumentException;
 use ReflectionMethod;
 
 /**
