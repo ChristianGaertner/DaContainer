@@ -9,6 +9,7 @@
  */
 
 use DaGardner\DaContainer\Container;
+use DaGardner\DaContainer\InjectorDetection\SimpleDetector;
 
 /**
 * PHPUnit Test
@@ -323,8 +324,36 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('foo'), $con->getDimdBlacklist());
     }
+
+    public function testSetDetector()
+    {
+        $con = new Container;
+
+        $con->setDetector(new MockDetector);
+        $con->enableInjecterDetection();
+        $this->expectOutputString('TESTING');
+
+        $con->resolve('ConcreteInjectorMethods');
+
+
+
+
+    }
 }
 
+class MockDetector implements DaGardner\DaContainer\InjectorDetection\DetectorInterface {
+    
+    private $silent = false;
+
+    public function detect(ReflectionMethod $method)
+    {
+        if (!$this->silent) {
+            echo "TESTING";    
+        }
+        $this->silent = true;
+        return false;
+    }
+}
 
 class ConcreteStub implements ConcreteStubInterface {}
 
