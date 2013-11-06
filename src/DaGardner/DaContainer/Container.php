@@ -47,10 +47,21 @@ class Container implements ArrayAccess, ResolverInterface
     protected $detector;
 
     /**
+     * Handels dependency resolving
+     * @var \DaGardner\DaContainer\DependencyResolver
+     */
+    protected $dependencyResolver;
+
+    /**
      * The blacklist for the dependeny injection method detection
      * @var array
      */
     protected $dimbBlacklist = array();
+
+    public function __construct()
+    {
+        $this->setDependencyResolver(new DependencyResolver($this));
+    }
 
     /**
      * Register a binding
@@ -204,6 +215,15 @@ class Container implements ArrayAccess, ResolverInterface
     public function setDetector(\DaGardner\DaContainer\InjectorDetection\DetectorInterface $detector)
     {
         $this->detector = $detector;
+    }
+
+    /**
+     * Injects the dependency resolver handler
+     * @param DependencyResolver $resolver The Dependency Resolver
+     */
+    public function setDependencyResolver(DependencyResolver $resolver)
+    {
+        $this->dependencyResolver = $resolver;
     }
 
     /**
@@ -372,34 +392,9 @@ class Container implements ArrayAccess, ResolverInterface
      *
      * @throws \DaGardner\DaContainer\Exceptions\ResolveException
      */
-    protected function getDependencies($parameters)
+    protected function getDependencies(array $parameters)
     {
-        $dependencies = array();
-
-        foreach ($parameters as $parameter) {
-
-            try {
-
-                $dependency = $parameter->getClass();
-
-            } catch (ReflectionException $e) {
-
-                throw new ResolveException('Target <' . $parameter . '> could not be found.', $e->getCode(), $e);
-
-            }
-
-            if (is_null($dependency)) {
-                // It 's a string or the like
-                $dependencies[] = $this->resolveArgument($parameter);
-
-            } else {
-
-                $dependencies[] = $this->resolveClass($parameter);
-
-            }
-        }
-
-        return (array) $dependencies;
+        return $this->dependencyResolver->getDependencies($parameters);
     }
 
     /**
@@ -411,27 +406,19 @@ class Container implements ArrayAccess, ResolverInterface
      */
     protected function resolveClass(\ReflectionParameter $parameter)
     {
-        return $this->resolve($parameter->getClass()->name, array());
+        return $this->dependencyResolver->resolveClass($parameter);
     }
 
     /**
      * Resolve a non-class argument
-     * @param  \ReflectionParamter $parameter The parameter
+     * @param  \ReflectionParameter $parameter The parameter
      * @return mixed                          The resolved type
      *
      * @throws \DaGardner\DaContainer\Exceptions\ParameterResolveException
      */
-    protected function resolveArgument(\ReflectionParamter $parameter)
+    protected function resolveArgument(\ReflectionParameter $parameter)
     {
-        if ($parameter->isDefaultValueAvailable()) {
-            
-            return $parameter->getDefaultValue();
-
-        } else {
-            // We cannot guess the value, can we!
-            throw new ParameterResolveException('Unresolvable parameter <' . $parameter . '>');
-            
-        }
+        return $this->dependencyResolver->resolveArgument($parameter);
     }
 
     protected function fireCallbacks($object)
