@@ -325,6 +325,10 @@ class ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('foo'), $con->getDimdBlacklist());
     }
 
+    /**
+     * This test is skipped if we' re not an 5.4 or higher
+     * @requires PHP 5.4
+     */
     public function testSetDetector()
     {
         $con = new Container;
