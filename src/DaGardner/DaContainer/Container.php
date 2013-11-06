@@ -11,6 +11,8 @@ use ReflectionClass;
 use RunTimeException;
 use ReflectionException;
 use DaGardner\DaContainer\Exceptions\ResolveException;
+use DaGardner\DaContainer\InjectorDetection\SimpleDetector;
+use DaGardner\DaContainer\InjectorDetection\DetectorInterface;
 use DaGardner\DaContainer\Exceptions\ParameterResolveException;
 
 /**
@@ -37,6 +39,12 @@ class Container implements ArrayAccess, ResolverInterface
      * @var array
      */
     protected $callbacks = array();
+
+    /**
+     * The DetectorInterface for detecting injector Methods
+     * @var \DaGardner\DaContainer\InjectorDetection\DetectorInterface
+     */
+    protected $detector;
 
     /**
      * The blacklist for the dependeny injection method detection
@@ -189,6 +197,16 @@ class Container implements ArrayAccess, ResolverInterface
     }
 
     /**
+     * Injects the Injectordetection handler
+     * If none is getting set it falls back to the SimpleDetector
+     * @param DaGardnerDaContainerInjectorDetectionDetectorInterface $detector The detector
+     */
+    public function setDetector(\DaGardner\DaContainer\InjectorDetection\DetectorInterface $detector)
+    {
+        $this->detector = $detector;
+    }
+
+    /**
      * Enable the powerful injector method detection.
      *
      * Example blacklist array:
@@ -224,6 +242,10 @@ class Container implements ArrayAccess, ResolverInterface
 
         }
 
+        if ($this->detector === null) {
+            $this->setDetector(new SimpleDetector);
+        }
+
         $blacklist = $this->buildDimdBlacklist($blacklist);
         $this->dimbBlacklist = $blacklist;
 
@@ -242,7 +264,7 @@ class Container implements ArrayAccess, ResolverInterface
                 /**
                  * This is not a complex detection, but most injecter methods are starting with a set[...]
                  */
-                if (strpos($method->name, 'set') === 0) {
+                if ($this->detector->detect($method)) {
                     
                     // Just check if the method is in the blacklist
                     if (in_array($method->name, $blacklist) || (isset($blacklist['_CLASSES_'][$class]) && in_array($method->name, $blacklist['_CLASSES_'][$class]))) {
