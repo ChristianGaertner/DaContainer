@@ -113,6 +113,24 @@ Strings in the main array are consired to be global and are ignored everytime.
 
 The class specific blacklist is only checked if the object is an instance of this class. A blacklist for a class should go into the ```_CLASSES_``` key.
 
+The algorithm of the method detection is pretty simple and not that complex. But you can write your own very algorithm.
+
+As of version 1.3 the detection algorithm lifes in it's own class. Your detector class just has to implement an interface:
+
+    class MyDetector implements \DaGardner\DaContainer\InjectorDetection\DetectorInterface {
+        
+        /**
+         * {@inheritdoc}
+         */
+        public function detect(ReflectionMethod $method) { }
+    }
+
+The `detect(ReflectionMethod $method)` gets the method of interest passed into and the task of this class is to
+return `true` or `false` whether the given method is a injector method.
+
+You can inject your detector this way: `$container->setDetector(new MyDetector);`. If you do not inject one the
+`SimpleDetector` will get used.
+
 ### Events
 
 The IoC Container has it' s own simple event system, which can be used standalone or getting hooked into the main event dispatcher!
