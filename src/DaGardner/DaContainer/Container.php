@@ -80,7 +80,7 @@ class Container implements ArrayAccess, ResolverInterface
             // that it is a classname and wrap it into a closure so it' s
             // easier when resolving.
 
-            $concrete = function ($container) use ($id, $concrete) {
+            $concrete = function (Container $container) use ($id, $concrete) {
 
                 $method = ($id == $concrete) ? 'build' : 'resolve';
 
